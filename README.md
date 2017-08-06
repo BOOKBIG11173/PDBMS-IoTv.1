@@ -48,7 +48,7 @@ Temp = อุณหภูมิ / varchar(5)
 humid = ควำมชื้น / varchar(5) 
 record = เวลำที่ทำกำรบันทึกข้อมูล / timestamp(Primary) 
 3.NodeMCU ส่งข้อมูลเข้ำไปยัง WebServer 
-#define web_server "http://104.199.141.40/" // IP web server 
+#define web_server "http://104.199.xx.xx/" // IP web server 
 Voidloop 
 HTTPClient http; 
 http.begin(web_server); 
