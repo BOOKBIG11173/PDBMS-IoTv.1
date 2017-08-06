@@ -39,25 +39,14 @@ $ sudo certbot --apache certonly <br />
 4.กลับมาที่ Tab Data เพื่อลองสร้างข้อมูล โดยคลิกที่เครื่องหมาย + <br /> 
 5.กดไปที่เมนู Home Overview ของ Project ที่เราสร้าง และ คลิกเลือกที่ Add Firebase To Your web app<br /> 
 6.ในที่นี้ NodeMCU จะทำส่งข้อมูลเข้าไปที่ WebServer ก่อนและ Server ทำการส่งค่าไปยัง Firebase ด้วย RESTFUL API (Method PUT)<br /> 
-function write($path="",$data=[])<br /> 
-{ <br />
-$HTTP = [ <br />
-'http' => [ <br />
-'method' => 'PUT',<br /> 
-'header' => 'Content-type: application/json', <br />
-'content' => json_encode($data)] <br />
-]; <br />
-$context = stream_context_create($HTTP); <br />
-$contents = file_get_contents($this->url."/".$path.".json", false, $context); <br />
-return ($contents!=false)?true:false; <br />
-} <br />
+![3](https://user-images.githubusercontent.com/30660759/29001178-c5769bfa-7aab-11e7-9f8e-8724258632d6.png)<br /> 
 ### 4.Set up mySQL<br />
-1. ทำกำรลง ติดตั้ง Apache2 / PHP7.0 / MySQL / phpMyadmin<br /> 
-2.เข้ำที่ phpMyadmin และทำกำรสร้ำงฐำนข้อมูลแบบ utf8_unicode_ci โดยจะมีฐำนข้อมูลชื่อ temp / humid / record <br />
+1.ทำการลง ติดตั้ง Apache2 / PHP7.0 / MySQL / phpMyadmin<br /> 
+2.เข้าที่ phpMyadmin และทำการสร้างฐานข้อมูลแบบ utf8_unicode_ci โดยจะมีฐานข้อมูลชื่อ temp / humid / record <br />
 Temp = อุณหภูมิ / varchar(5) <br />
 humid = ควำมชื้น / varchar(5) <br />
-record = เวลำที่ทำกำรบันทึกข้อมูล / timestamp(Primary)<br /> 
-3.NodeMCU ส่งข้อมูลเข้ำไปยัง WebServer <br />
+record = เวลำที่ทำการบันทึกข้อมูล / timestamp(Primary)<br /> 
+3.NodeMCU ส่งข้อมูลเข้าไปยัง WebServer <br />
 #define web_server "http://104.199.xx.xx/" // IP web server <br />
 Voidloop <br />
 HTTPClient http; <br /><br />
@@ -66,23 +55,16 @@ http.addHeader("Content-Type", "application/x-www-form-urlencoded"); <br /><br /
 http.POST("id="+String(id)+","+String(tem)+","+String(hu)); //Sent Data to Database <br />
 String res = http.getString(); <br />
 Serial.println(res);<br /> 
-4.ทำ function บันทึกผลลงบนฐำนข้อมูล <br />
-function insert($table,$data){ <br />
-$con = mysqli_connect($this->host , $this->username , $this->password , $this->db_name);<br /> 
-mysqli_set_charset($con,"utf8"); <br />
-$sql = "insert into ".$table." values('".$data["id"]."','".$data["temp"]."','".$data["humid"]."','".date("Y-m-d H:i:s")."')"; <br />
-$save = mysqli_query($con,$sql); <br /><br />
-$con->close(); <br />
-return $save; <br />
-} <br />
+4.ทำ function บันทึกผลลงบนฐานข้อมูล <br />
+![4](https://user-images.githubusercontent.com/30660759/29001182-c58b82ae-7aab-11e7-8cfe-43735b1179ca.png)<br />
 ### 5.https:// connection fingerprint <br />
-1. กำรส่งข้อมูลแบบ https ต้องมี fingerprint หำได้โดยกำรนำ เว็ปของเรำไปวำงที่เว็ป https://www.grc.com/fingerprints.htm แล้วจะได้ fingerprint มำ เช่น DA:F3:84:CC:D9:9A:1C:22:79:EF:C2:B5:88:7F:8A:49:F5:56:0B:3D <br />
+1.การส่งข้อมูลแบบ https:// ต้องมี fingerprint หาได้โดยการนำ เว็ปของเราไปวางที่เว็ป https://www.grc.com/fingerprints.htm แล้วจะได้ fingerprint มา เช่น DA:F3:84:CC:D9:9A:1C:22:79:EF:C2:B5:88:7F:8A:49:F5:56:0B:3D<br />
 2.เขียนโค้ดบน Arduino <br />
 #define web_server " domain name " //IP web server <br /> 
 #define figger_p " figgerprint " // Figger print grc.com/fingerprints.htm <br />
 ส่วนของ void loop <br />
 http.begin(web_server,figger_p); <br />
-6. Sleep mode Hardware+code <br />
+### 6. Sleep mode Hardware+code <br />
 #define SECONDS_DS(seconds) ((seconds)*1000000UL) <br />
 void setup() { <br />
 Serial.begin(115200); <br />
@@ -93,12 +75,16 @@ delay(1000); <br />
 Serial.println("Sleeping"); <br />
 ESP.deepSleep(SECONDS_DS(5)); <br />
 } เมื่ออัพโหลดโคดแล้ว ให้ต่อขำ D0 กับ RST เพื่อให้ทำงำนในโหมด sleep <br />
-### 7.สร้างสรรค์ 
+![5](https://user-images.githubusercontent.com/30660759/29001180-c5894d86-7aab-11e7-8f30-894434f799dc.png)<br />
+### 7.สร้างสรรค์
+1.นำพัดลมมาทำการ
 ### 8.MQTT 
-MQTT คือ Broker ซึ่งเป็นส่วนกลำงที่จะนำพำข้อมูลจำกอุปกรณ์ต่ำง ๆ มำกองกันไว้ที่ Broker ซึ่งเป็นไปได้ว่ำจะมีหลำย ๆ อุปกรณ์อำจจะเป็น 10 20 ตัว หรืออำจจะ 100 ตัว เชื่อมต่อมำที่ Broker เดียวกัน โดยใช้ Netpie สร้ำง Device Key, Session Key โดยตัว <br />
-Device Key จะเป็นฝั่งของทำง Arduino ส่งเข้ำไปยัง NETPIE <br /><br />
-Session Key จะเป็นข้อมูลส่งแบบ Java โดย NETPIE ทำกำรส่งข้อมูลไปยัง Web <br />
-ใช้หลักกำร Firebase แต่เพียง Netpie เป็น MQTT และสำมำรถส่งไปหลำยๆที่พร้อมกันได้ <br />
+MQTT คือ Broker ซึ่งเป็นส่วนกลางที่จะนำพาข้อมูลจำกอุปกรณ์ต่างๆ มากองกันไว้ที่ Broker ซึ่งเป็นไปได้ว่าจะมีหลายๆ อุปกรณ์อาจจะเป็น 10 20 ตัว หรืออาจจะ 100 ตัว เชื่อมต่อมาที่ Broker เดียวกัน โดยใช้ Netpie สร้าง Device Key, Session Key โดยตัว <br />
+Device Key จะเป็นฝั่งของทำง Arduino ส่งเข้าไปยัง NETPIE <br /><br />
+Session Key จะเป็นข้อมูลส่งแบบ Java โดย NETPIE ทำการส่งข้อมูลไปยัง Web <br />
+ใช้หลักการ Firebase แต่เพียง Netpie เป็น MQTT และสามารถส่งไปหลายๆที่พร้อมกันได้ <br />
 ### 9.แสดงข้อมูล PHP 
+![6](https://user-images.githubusercontent.com/30660759/29001181-c58b19e0-7aab-11e7-9b56-2ceb45ee698d.png)<br />
 ### 10.แสดงข้อมูล Firebase 
+![7](https://user-images.githubusercontent.com/30660759/29001179-c577bdaa-7aab-11e7-8be3-2c4cf64ef29c.png)<br />
 
