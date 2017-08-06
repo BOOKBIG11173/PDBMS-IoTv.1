@@ -11,10 +11,10 @@ PDBMS - Smart Farm With IoT
 3.ขา3-NULL    => NULL ของ NodeMCU<br />
 4.ขา4-GND     => ขา ของ NodeMCU <br />
 ทำการต่อ NodeMCU เข้ากับ Sensor LCD แบบ I2C โดย <br />
-1.1.ขา1-GND => ขา GND ของ NodeMCU <br /> 
-1.2.ขา2-VCC => ขา Vin(5.5v) ของ NodeMCU <br />
-1.3.ขา3-SDA => ขา D2 ของ NodeMCU <br />
-1.4.ขา4-SCL => ขา D1 ของ NodeMCU<br />
+1.ขา1-GND => ขา GND ของ NodeMCU <br /> 
+2.ขา2-VCC => ขา Vin(5.5v) ของ NodeMCU <br />
+3.ขา3-SDA => ขา D2 ของ NodeMCU <br />
+4.ขา4-SCL => ขา D1 ของ NodeMCU<br />
 ### 2.สมัคร Domain Name กับเขียว SHA256<br />
 ทำการสมัคร Domain name โดยสมัครที่เว็ป Namecheap จำกนั้นก็ทำการตั้งค่าใน Domain name ที่เราสมัคร โดยเข้าไปที่ Advance DNS ทำการเพิ่ม HOST Record 
 Type HOST Value TTL<br />
@@ -33,11 +33,12 @@ $ sudo certbot --apache certonly <br />
 เมื่อทำการลง Certbot จะให้ใส่ E-mail และ Domain name ของเรา ถ้ายังไม่ได้สมัคร Domain จะไม่สารมารถทำการเข้ารหัส SHA ได้ <br />
 ### 3.Set up Firebase
 1.สมัคร Firebase และทำการ เพิ่มโครงการ ตั้งชื่อโครงการของเรา<br />
-2.หลังจำกตั้งชื่อโครงกำรของเรำ แล้ว ก็จะได้หน้ำ Console ของ โครงกำรที่เรำสร้ำงไป<br />
-3.ให้เลือกเมนู Database จำกนั้นไปที่ Tab RULES เพื่อเข้ำจัดกำร Users authorized ของกำรเข้ำถึงของมูล เบื้องต้นเรำจะอนุญำตให้คนที่เรียกเข้ำถึงข้อมูลได้หมดทั้ง Read และ Write ข้อมูลได้ โดยแก้ไข Codeแล้ว กดปุ่ม PUBLIC เพื่อบันทึกกำรเปลี่ยนแปลง<br /> 
-4.กลับมำที่ Tab Data เพื่อลองสร้ำงข้อมูลกัน โดยคลิกที่เครื่องหมำย +<br /> 
-5.กดไปที่เมนู Home Overview ของ Project ที่เรำสร้ำง และ คลิกเลือกที่ Add Firebase To Your web app<br /> 
-6.ในที่นี้ NodeMCU จะทำส่งข้อมูลเข้ำไปที่ WebServer ก่อนและ Server ทำกำรส่งค่ำไปยัง Firebase ด้วย RESTFUL API (Method PUT)<br /> 
+2.หลังจากตั้งชื่อโครงการของเราแล้ว จะได้หน้า Console ของ โครงการที่เราสร้างไป<br />
+3.ให้เลือกเมนู Database จากนั้นไปที่ Tab RULES เพื่อเข้าจัดการ Users authorized ของการเข้าถึงข้อมูล เบื้องต้นเราจะอนุญาตให้คนที่เรียกเข้าถึงข้อมูลได้หมดทั้ง Read และ Write ข้อมูลได้ โดยแก้ไข Code แล้ว กดปุ่ม PUBLIC เพื่อบันทึกกำรเปลี่ยนแปลง<br /> 
+![2](https://user-images.githubusercontent.com/30660759/29001177-c56b9b06-7aab-11e7-87d9-cada0bb93ef2.png)<br />
+4.กลับมาที่ Tab Data เพื่อลองสร้างข้อมูล โดยคลิกที่เครื่องหมาย + <br /> 
+5.กดไปที่เมนู Home Overview ของ Project ที่เราสร้าง และ คลิกเลือกที่ Add Firebase To Your web app<br /> 
+6.ในที่นี้ NodeMCU จะทำส่งข้อมูลเข้าไปที่ WebServer ก่อนและ Server ทำการส่งค่าไปยัง Firebase ด้วย RESTFUL API (Method PUT)<br /> 
 function write($path="",$data=[])<br /> 
 { <br />
 $HTTP = [ <br />
