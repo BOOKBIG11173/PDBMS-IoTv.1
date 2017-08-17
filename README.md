@@ -64,6 +64,7 @@ Serial.println(res);<br />
 #define figger_p " figgerprint " // Figger print grc.com/fingerprints.htm <br />
 ส่วนของ void loop <br />
 http.begin(web_server,figger_p); <br />
+![finger](https://user-images.githubusercontent.com/30660759/29420714-f718b928-839c-11e7-8f3e-523a0a0fba39.png)
 ### 6. Sleep mode Hardware+code <br />
 #define SECONDS_DS(seconds) ((seconds)*1000000UL) <br />
 void setup() { <br />
@@ -92,9 +93,14 @@ if(hu >= 80){<br />
    }<br />
 ### 8.MQTT 
 MQTT คือ Broker ซึ่งเป็นส่วนกลางที่จะนำพาข้อมูลจำกอุปกรณ์ต่างๆ มากองกันไว้ที่ Broker ซึ่งเป็นไปได้ว่าจะมีหลายๆ อุปกรณ์อาจจะเป็น 10 20 ตัว หรืออาจจะ 100 ตัว เชื่อมต่อมาที่ Broker เดียวกัน โดยใช้ Netpie สร้าง Device Key, Session Key โดยตัว <br />
-Device Key จะเป็นฝั่งของทำง Arduino ส่งเข้าไปยัง NETPIE <br /><br />
+Device Key จะเป็นฝั่งของทำง Arduino ส่งเข้าไปยัง NETPIE<br />
 Session Key จะเป็นข้อมูลส่งแบบ Java โดย NETPIE ทำการส่งข้อมูลไปยัง Web <br />
 ใช้หลักการ Firebase แต่เพียง Netpie เป็น MQTT และสามารถส่งไปหลายๆที่พร้อมกันได้ <br />
+![mqtt](https://user-images.githubusercontent.com/30660759/29420871-86490ff8-839d-11e7-99b1-9f81c2466ffb.png)
+เรียกใช้ Library Netpie microgear
+![mqtt2](https://user-images.githubusercontent.com/30660759/29420790-43c1af00-839d-11e7-9ac0-8e6449a1e194.png)
+ข้อมูลที่ส่งออกไปเป็นแบบ .json
+![mqtt3](https://user-images.githubusercontent.com/30660759/29420870-8646e9a8-839d-11e7-9b3d-eaa25509f3dc.png)
 ### 9.แสดงข้อมูล PHP 
 ![6](https://user-images.githubusercontent.com/30660759/29001181-c58b19e0-7aab-11e7-9b56-2ceb45ee698d.png)<br />
 ### 10.แสดงข้อมูล Firebase 
